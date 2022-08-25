@@ -7,25 +7,29 @@ import java.util.HashMap;
 
 @Service
 public class OperationService {
-    private final HashMap<String, BaseOperation> operations = new HashMap<>();
+    private final HashMap<String, String> operations = new HashMap<>();
 
     public OperationService() {
-        operations.put("plus", new Plus());
-        operations.put("multiply", new Multiply());
-        operations.put("minus", new Minus());
-        operations.put("divide", new Divide());
+        operations.put("plus", Plus.class.getName());
+        operations.put("multiply", Multiply.class.getName());
+        operations.put("minus", Minus.class.getName());
+        operations.put("divide", Divide.class.getName());
     }
 
     public BaseOperation createOperation(String operationName) {
-        BaseOperation templateOperation = operations.get(operationName.toLowerCase().trim());
-        if (null == templateOperation) {
+        String className = operations.get(operationName.toLowerCase().trim());
+        if (null == className) {
             return null;
         }
 
-        return templateOperation.clone();
+        try {
+            return (BaseOperation) Class.forName(className).newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            return null;
+        }
     }
 
-    public BaseOperation configureOperation(BaseOperation operation, int a, int b) {
+    public BaseOperation configureOperation(BaseOperation operation, double a, double b) {
         operation.setA(a).setB(b);
         return operation;
     }

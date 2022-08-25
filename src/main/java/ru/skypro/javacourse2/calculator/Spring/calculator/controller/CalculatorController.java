@@ -21,7 +21,11 @@ public class CalculatorController {
     }
 
     @GetMapping("/calculator/{operationName}")
-    public String calculator(@PathVariable String operationName, @RequestParam int num1, @RequestParam int num2) {
+    public String calculator(
+        @PathVariable String operationName,
+        @RequestParam double num1,
+        @RequestParam double num2
+    ) {
         BaseOperation operation = operationService.createOperation(operationName);
 
         if (null == operation) {

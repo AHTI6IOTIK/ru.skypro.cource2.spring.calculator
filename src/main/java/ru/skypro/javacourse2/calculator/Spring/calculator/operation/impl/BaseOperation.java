@@ -2,28 +2,32 @@ package ru.skypro.javacourse2.calculator.Spring.calculator.operation.impl;
 
 import ru.skypro.javacourse2.calculator.Spring.calculator.operation.OperationInterface;
 
-public abstract class BaseOperation implements OperationInterface, Cloneable {
+import java.text.DecimalFormat;
 
-    private int a;
+public abstract class BaseOperation implements OperationInterface {
 
-    private int b;
+    protected DecimalFormat decimalFormat = new DecimalFormat("#.##########");
+
+    private double a;
+
+    private double b;
 
     private String error;
 
-    public int getA() {
+    public double getA() {
         return a;
     }
 
-    public BaseOperation setA(int a) {
+    public BaseOperation setA(double a) {
         this.a = a;
         return this;
     }
 
-    public int getB() {
+    public double getB() {
         return b;
     }
 
-    public BaseOperation setB(int b) {
+    public BaseOperation setB(double b) {
         this.b = b;
         return this;
     }
@@ -39,15 +43,5 @@ public abstract class BaseOperation implements OperationInterface, Cloneable {
 
     public String getError() {
         return error;
-    }
-
-    @Override
-    public BaseOperation clone() {
-        try {
-            return (BaseOperation) super.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println("Ошибка создания копии");
-            return null;
-        }
     }
 }

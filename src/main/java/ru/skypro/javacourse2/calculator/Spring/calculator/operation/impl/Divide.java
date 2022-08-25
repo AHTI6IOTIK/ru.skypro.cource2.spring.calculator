@@ -4,20 +4,27 @@ public class Divide extends BaseOperation {
 
     @Override
     public boolean isSuccess() {
-        boolean isSuccess = (getA() > 0 && getB() > 0);
-        if (!isSuccess) {
+        boolean hasError = (getA() == 0 || getB() == 0);
+        if (hasError) {
             setError("Делить на 0 нельзя");
+            return false;
         }
-        return isSuccess;
+
+        return true;
     }
 
     @Override
-    public int calculate() {
+    public Number calculate() {
         return getA() / getB();
     }
 
     @Override
     public String getCalculateMessage() {
-        return String.format("%d / %d = %d", getA(), getB(), calculate());
+        return String.format(
+            "%s / %s = %s",
+            decimalFormat.format(getA()),
+            decimalFormat.format(getB()),
+            decimalFormat.format(calculate())
+        );
     }
 }
