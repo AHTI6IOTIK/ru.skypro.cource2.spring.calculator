@@ -1,13 +1,15 @@
 package ru.skypro.javacourse2.calculator.Spring.calculator.operation.impl;
 
+import ru.skypro.javacourse2.calculator.Spring.calculator.exception.DivisionErrorException;
+
 public class Divide extends BaseOperation {
+    public static final String TYPE = "divide";
 
     @Override
     public boolean isSuccess() {
         boolean hasError = (getA() == 0 || getB() == 0);
         if (hasError) {
-            setError("Делить на 0 нельзя");
-            return false;
+            throw new DivisionErrorException();
         }
 
         return true;

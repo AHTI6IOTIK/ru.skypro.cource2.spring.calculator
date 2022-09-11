@@ -1,6 +1,7 @@
 package ru.skypro.javacourse2.calculator.Spring.calculator.operation.impl;
 
 public class Minus extends BaseOperation {
+    public static final String TYPE = "minus";
     @Override
     public Number calculate() {
         return getA() - getB();

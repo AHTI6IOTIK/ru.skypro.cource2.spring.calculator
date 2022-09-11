@@ -10,26 +10,30 @@ public class OperationService {
     private final HashMap<String, String> operations = new HashMap<>();
 
     public OperationService() {
-        operations.put("plus", Plus.class.getName());
-        operations.put("multiply", Multiply.class.getName());
-        operations.put("minus", Minus.class.getName());
-        operations.put("divide", Divide.class.getName());
+        operations.put(Plus.TYPE, Plus.class.getName());
+        operations.put(Multiply.TYPE, Multiply.class.getName());
+        operations.put(Minus.TYPE, Minus.class.getName());
+        operations.put(Divide.TYPE, Divide.class.getName());
     }
 
-    public BaseOperation createOperation(String operationName) {
+    public BaseOperation createOperation(String operationName, double a, double b) {
         String className = operations.get(operationName.toLowerCase().trim());
         if (null == className) {
             return null;
         }
 
         try {
-            return (BaseOperation) Class.forName(className).newInstance();
+            return configureOperation(
+                (BaseOperation) Class.forName(className).newInstance(),
+                a,
+                b
+            );
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             return null;
         }
     }
 
-    public BaseOperation configureOperation(BaseOperation operation, double a, double b) {
+    private BaseOperation configureOperation(BaseOperation operation, double a, double b) {
         operation.setA(a).setB(b);
         return operation;
     }
